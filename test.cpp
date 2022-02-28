@@ -22,9 +22,18 @@ void fun1() {
     const auto t = boost::make_tuple(0, -1.0, 2);
     assert(2 == boost::get<2>(t));
 }
+void fun2() {
+    boost::tuple<int, double>tt(1, 10.00d);
+    int a = 0;
+    double b = 0;
+    boost::tie(a, b) = tt;
+    std::cout << "a = " << a << std::endl;
+    std::cout << "b = " << b << std::endl;
+}
 int main() {
     fun0();
     fun1();
+    fun2();
 
     return 0;
 }
