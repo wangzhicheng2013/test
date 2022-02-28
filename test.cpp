@@ -2,6 +2,7 @@
 #include <boost/tuple/tuple_comparison.hpp>
 #include <iostream>
 #include <string>
+#include <set>
 #include <cassert>
 boost::tuple<int, std::string>almost_a_pair(10, "Hello");
 boost::tuple<int, float, double, int>quad(10, 1.0f, 10.0d, 1);
