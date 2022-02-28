@@ -1,0 +1,1 @@
+g++ -std=c++11 -g -o Test test.cpp -I ./ -I /opt/boost/boost_1_78_0 -L /opt/boost/boost_1_78_0/stage -pthread
