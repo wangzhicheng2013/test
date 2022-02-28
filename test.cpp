@@ -1,5 +1,5 @@
 #include <boost/tuple/tuple.hpp>
-#include <boost/tuple/tuple_comparsion.hpp>
+#include <boost/tuple/tuple_comparison.hpp>
 #include <iostream>
 #include <string>
 #include <cassert>
