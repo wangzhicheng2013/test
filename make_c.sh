@@ -1,0 +1,1 @@
+gcc -g -o Test test.c -I ./ 
