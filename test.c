@@ -15,8 +15,7 @@ int main() {
     test_bit1.a = 0;
     test_bit1.b = 0;
     test_bit1.c = 3;
-    printf("%d\n", test_bit2.c);
-    printf("%d\n", test_bit1);
-    
+    printf("%d\n", test_bit1.c);
+
     return 0;
 }
