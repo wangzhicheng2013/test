@@ -5,7 +5,7 @@ int main() {
     const char *p1 = string;
     const PSTR p2 = string;
     p1++;
-    p2++;
+    //p2++;
     *p2 = 'd';
     printf("%s\n", string);
     
