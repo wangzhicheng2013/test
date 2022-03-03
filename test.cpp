@@ -18,7 +18,7 @@ void sample2() {
           "We ", "are", " the champions!"
     };
     const std::size_t count0 = std::count_if(v.begin(), v.end(), [] (const std::string &str) { return str.empty(); } );
-    const std::size_t count1 = std::count_if(v.begin(), v.end(), boost::bind(std::string::empty, _1) );
+    const std::size_t count1 = std::count_if(v.begin(), v.end(), boost::bind(&std::string::empty, _1) );
     assert(count0 == count1);
 }
 void sample3() {
@@ -31,7 +31,7 @@ void sample3() {
 }
 void sample4() {
     const auto twice = boost::bind(std::plus<int>(), _1, _1);
-    assert(twice(2), 4);
+    assert(twice(2) == 4);
     const auto minus_from_second = boost::bind(std::minus<int>(), _2, _1);
     assert(minus_from_second(2, 4), 2);
 }
