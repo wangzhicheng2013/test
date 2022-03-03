@@ -1,4 +1,4 @@
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/array.hpp>
 #include <iostream>
 #include <string>
