@@ -1,13 +1,9 @@
 #include <stdio.h>
-typedef char * PSTR;
 int main() {
-    char string[4] = "abc";
-    const char *p1 = string;
-    const PSTR p2 = string;
-    p1++;
-    //p2++;         // 编译出错
-    *p2 = 'd';
-    printf("%s\n", string);
+    int a = 1;
+    int b = 2;
+    int c = a+++++b;
+    printf("a = %d, c = %d\n", a, c);
     
     return 0;
 }
