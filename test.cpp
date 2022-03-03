@@ -33,7 +33,7 @@ void sample4() {
     const auto twice = boost::bind(std::plus<int>(), _1, _1);
     assert(twice(2) == 4);
     const auto minus_from_second = boost::bind(std::minus<int>(), _2, _1);
-    assert(minus_from_second(2, 4), 2);
+    assert(minus_from_second(2, 4) == 2);
 }
 int main() {
     sample1();
