@@ -1,6 +1,7 @@
 #include <stdio.h>
 #define MAXSIZE 10
 typedef int stack_type;
+typedef int bool;
 struct mystack 
 {
     stack_type data[MAXSIZE];
