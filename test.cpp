@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <cassery>
+#include <cassert>
 #include <boost/move/move.hpp>
 #include <boost/swap.hpp>
 
