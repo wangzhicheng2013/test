@@ -3,7 +3,7 @@
 #include <boost/config.hpp>
 
 int main() {
-    std::cout << BOOST_VESION << std::endl;
+    std::cout << BOOST_VERSION << std::endl;
     std::cout << BOOST_LIB_VERSION << std::endl;
     std::cout << BOOST_PLATFORM << std::endl;
     std::cout << BOOST_COMPILER << std::endl;
