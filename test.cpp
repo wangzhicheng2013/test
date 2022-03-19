@@ -1,3 +1,4 @@
+#include <boost/noncopyable.hpp>
 class descriptor_owner_fixed : private boost::noncopyable {
 public:
     descriptor_owner_fixed(const char *param) {
@@ -12,6 +13,6 @@ void i_am_good() {
 
 int main() {
     i_am_good();
-    
+
     return 0;
 }
