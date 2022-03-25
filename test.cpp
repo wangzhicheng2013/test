@@ -56,7 +56,7 @@ public:
             std::cout << ss << std::endl;
         }
     }
-    ~descriptor_owner() {
+    ~descriptor_owner1() {
         clear();
     }
 };
