@@ -1,18 +1,30 @@
-#include <boost/noncopyable.hpp>
-class descriptor_owner_fixed : private boost::noncopyable {
+#include <string.h>
+#include <iostream>
+#include <algorithm>
+#include <cassert>
+#include "boost/noncopyable.hpp"
+class descriptor_owner : private boost::noncopyable {
+    void *descriptor_;
 public:
-    descriptor_owner_fixed(const char *param) {
-        (void)param;
+    descriptor_owner() : descriptor_(nullptr) {}
+    explicit descriptor_owner(const char *param) : descriptor_(strdup(param)) {}
+    void swap(descriptor_owner& desc) {
+        std::swap(descriptor_, desc.descriptor_);
+    }
+    ~descriptor_owner() {
+        if (descriptor_) {
+            free(descriptor_);
+            descriptor_ = nullptr;
+        }
     }
 };
-void i_am_good() {
-    descriptor_owner_fixed d1("OOP");
-    descriptor_owner_fixed d2("OOC");
+void construct_descriptor1(descriptor_owner& ret) {
+    descriptor_owner("Construct using this string").swap(ret);
 }
-
-
 int main() {
-    i_am_good();
-
+    descriptor_owner ret;
+    construct_descriptor1(ret);
+    std::cout << *ret << std::endl;
+    
     return 0;
 }
