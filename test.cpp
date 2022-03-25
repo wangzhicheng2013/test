@@ -11,10 +11,10 @@ public:
     void swap(descriptor_owner& desc) {
         std::swap(descriptor_, desc.descriptor_);
     }
-    void show() const {
+    void show() {
         if (descriptor_) {
-            const char *ss = (const char *)descriptor_;
-            std::cout << ss << std::endl;
+            //const char *ss = (const char *)descriptor_;
+            //std::cout << ss << std::endl;
         }
     }
     ~descriptor_owner() {
