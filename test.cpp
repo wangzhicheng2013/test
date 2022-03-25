@@ -68,7 +68,7 @@ class descriptor_owner_movable {
 public:
     descriptor_owner_movable() : descriptor_(nullptr) {}
     explicit descriptor_owner_movable(const char *param) : descriptor_(strdup(param)) {}
-    descriptor_owner_movable(BOOST_RV_REF(descriptor_owner_movable)param) BOOST_NOEXCEPT : descriptor_(param.descriptor_) {}
+    descriptor_owner_movable(BOOST_RV_REF(descriptor_owner_movable)param) BOOST_NOEXCEPT : descriptor_(param.descriptor_) {
         param.descriptor_ = nullptr;
     }
     descriptor_owner_movable & operator = (descriptor_owner_movable)param) BOOST_NOEXCEPT {
@@ -107,5 +107,7 @@ int main() {
     boost::container::vector<descriptor_owner_movable>vec;
     vec.resize(10);
     vec.push_back(construct_descriptor3());
+    vec.back() = boost::move(vec.front());
+
     return 0;
 }
