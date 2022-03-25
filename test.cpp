@@ -14,7 +14,8 @@ public:
     void show() const {
         if (descriptor_) {
             const char *ss = (const char *)descriptor_;
-        std::cout << ss << std::endl;
+            std::cout << ss << std::endl;
+        }
     }
     ~descriptor_owner() {
         if (descriptor_) {
