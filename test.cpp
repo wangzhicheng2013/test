@@ -71,7 +71,7 @@ public:
     descriptor_owner_movable(BOOST_RV_REF(descriptor_owner_movable)param) BOOST_NOEXCEPT : descriptor_(param.descriptor_) {
         param.descriptor_ = nullptr;
     }
-    descriptor_owner_movable & operator = (descriptor_owner_movable)param) BOOST_NOEXCEPT {
+    descriptor_owner_movable & operator = (BOOST_RV_REF(descriptor_owner_movable)param) BOOST_NOEXCEPT {
         descriptor_owner_movable tmp(std::move(param));
         std::swap(descriptor_, tmp.descriptor_);
         return *this;
