@@ -1,68 +1,71 @@
 #include <stdio.h>
-#define MAXSIZE 10
-typedef int stack_type;
-typedef int bool;
-struct mystack 
+#include <assert.h>
+#define MAKE_INSTANCE 1
+#define FREE_INSTANCE 0
+typedef struct 
 {
-    stack_type data[MAXSIZE];
-    int top;
-};
-struct mystack s;
-void init() 
+    int age;
+    char name[12];
+} record;
+static record * operate_instance(int flag) 
 {
-    s.top = -1;
-}
-bool isEmpty()
-{
-    return -1 == s.top;
-}
-bool isFull()
-{
-    return MAXSIZE - 1 == s.top;
-}
-void push(stack_type node) 
-{
-    if (!isFull())
+    static record *pRecord = NULL;
+    if (MAKE_INSTANCE == flag) 
     {
-        s.data[++s.top] = node;
+        if (NULL != pRecord)
+        {
+            printf("the instance existed!\n");
+            return pRecord;
+        }
+        else
+        {
+            pRecord = (record *)malloc(sizeof(record));
+            if (NULL == pRecord) 
+            {
+                printf("malloc failed!\n");
+                return NULL;
+            }
+            else
+            {
+                printf("malloc success!\n");
+                return pRecord;
+            }
+        }
     }
-    else 
+    else if (FREE_INSTANCE == flag)
     {
-        printf("mystack is full!\n");
-    }
-}
-void pop() 
-{
-    if (!isEmpty())
-    {
-        --s.top;
-    }
-    else 
-    {
-        printf("mystack is empty!\n");
-    }
-}
-stack_type top()
-{
-    if (!isEmpty())
-    {
-        return s.data[s.top];
-    }
-    else 
-    {
-        printf("mystack is empty!\n");
+        if (NULL != pRecord)
+        {
+            printf("free memory!\n");
+            free(pRecord);
+            pRecord = NULL;
+            return pRecord;
+        }
+        else
+        {
+            printf("the pointer is NULL!\n");
+            return pRecord;
+        }
     }
 }
-void destory()
+record *make_instance() 
 {
-    s.top = -1;
+    record *pRecord = operate_instance(MAKE_INSTANCE);
+    return pRecord;
 }
-
+void free_instance()
+{
+    record *pRecord = operate_instance(FREE_INSTANCE);
+    if (NULL == pRecord)
+    {
+        printf("free ok!\n");
+    }
+}
 int main() {
-    push(100);
-    push(1000);
-    pop();
-    printf("%d\n", top());
-    
+    record *pRecord1 = make_instance();
+    record *pRecord2 = make_instance();
+    assert(pRecord1 == pRecord2);
+    free_instance();
+
     return 0;
 }
