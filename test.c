@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #define MAKE_INSTANCE 1
 #define FREE_INSTANCE 0
