@@ -6,6 +6,7 @@ int main() {
     std::cout << d.year() << std::endl;
     std::cout << d.month() << std::endl;
     std::cout << d.day() << std::endl;
+    std::cout << d.week_number() << std::endl;
 
     return 0;
 }
