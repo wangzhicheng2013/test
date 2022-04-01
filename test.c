@@ -23,7 +23,7 @@ void produce_travel_shoes(myShoes *pshoes)
 #define TRAVEL_TYPE  0x2
 myShoes *produce_new_shoes(int type)
 {
-    if (type != LEATHER_TYPE || type != TRAVEL_TYPE)
+    if (type != LEATHER_TYPE && type != TRAVEL_TYPE)
     {
         return NULL;
     }
