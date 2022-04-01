@@ -49,7 +49,7 @@ int main()
     myShoes *pshoes = produce_new_shoes(LEATHER_TYPE);
     if (pshoes)
     {
-        pshoes->produce_shoes();
+        pshoes->produce_shoes(pshoes);
         free(pshoes);
     }
 
