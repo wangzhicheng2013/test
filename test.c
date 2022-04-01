@@ -1,72 +1,57 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
-#define MAKE_INSTANCE 1
-#define FREE_INSTANCE 0
-typedef struct 
+typedef struct _shoes
 {
-    int age;
-    char name[12];
-} record;
-static record * operate_instance(int flag) 
+    int type;
+    void (*produce_shoes)(struct _shoes *);
+}myShoes;
+void produce_leather_shoes(myShoes *pshoes) 
 {
-    static record *pRecord = NULL;
-    if (MAKE_INSTANCE == flag) 
+    if (NULL != pshoes)
     {
-        if (NULL != pRecord)
-        {
-            printf("the instance existed!\n");
-            return pRecord;
-        }
-        else
-        {
-            pRecord = (record *)malloc(sizeof(record));
-            if (NULL == pRecord) 
-            {
-                printf("malloc failed!\n");
-                return NULL;
-            }
-            else
-            {
-                printf("malloc success!\n");
-                return pRecord;
-            }
-        }
-    }
-    else if (FREE_INSTANCE == flag)
-    {
-        if (NULL != pRecord)
-        {
-            printf("free memory!\n");
-            free(pRecord);
-            pRecord = NULL;
-            return pRecord;
-        }
-        else
-        {
-            printf("the pointer is NULL!\n");
-            return pRecord;
-        }
+        printf("produce the leather shoes!\n");
     }
 }
-record *make_instance() 
+void produce_travel_shoes(myShoes *pshoes) 
 {
-    record *pRecord = operate_instance(MAKE_INSTANCE);
-    return pRecord;
-}
-void free_instance()
-{
-    record *pRecord = operate_instance(FREE_INSTANCE);
-    if (NULL == pRecord)
+    if (NULL != pshoes)
     {
-        printf("free ok!\n");
+        printf("produce the travel shoes!\n");
     }
 }
-int main() {
-    record *pRecord1 = make_instance();
-    record *pRecord2 = make_instance();
-    assert(pRecord1 == pRecord2);
-    free_instance();
+#define LEATHER_TYPE 0x1
+#define TRAVEL_TYPE  0x2
+myShoes *produce_new_shoes(int type)
+{
+    if (type != LEATHER_TYPE || type != TRAVEL_TYPE)
+    {
+        return NULL;
+    }
+    myShoes *pshoes = (myShoes *)malloc(sizeof(myShoes));
+    if (NULL == pshoes) 
+    {
+        return NULL;
+
+    }
+    pshoes->type = type;
+    if (LEATHER_TYPE == type) 
+    {
+        pshoes->produce_shoes = produce_leather_shoes;
+    }
+    else
+    {
+        pshoes->produce_shoes = produce_travel_shoes;
+    }
+    return pshoes;
+}
+int main() 
+{
+    myShoes *pshoes = produce_new_shoes(LEATHER_TYPE);
+    if (pshoes)
+    {
+        pshoes->produce_shoes();
+        free(pshoes);
+    }
 
     return 0;
 }
