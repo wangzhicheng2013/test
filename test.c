@@ -107,8 +107,18 @@ int main()
     CoffeeTeaShop *pShop = create_coffeetea_shop(SELL_BLACK_COFFEE_REA_TEA);
     if (pShop)
     {
-        pShop->sell_coffee();
-        pShop->sell_tea();
+        Coffee *pCoffee = pShop->sell_coffee();
+        if (pCoffee)
+        {
+            pCoffee->have_coffee();
+            free(pCoffee);
+        }
+        Tea *pTea = pShop->sell_tea();
+        if (pTea)
+        {
+            pTea->have_tea();
+            free(pTea);
+        }
         free(pShop);
     }
 
