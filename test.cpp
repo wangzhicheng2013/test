@@ -8,7 +8,8 @@ boost::array<unsigned char, 60> chars_65_125() {
     return res;
 }
 int main() {
-    for_each(res.begin(), res.end(), [] (auto e) { std::cout << e << std::endl; } );
+    boost::array<unsigned char, 60> res = chars_65_125();
+    std::for_each(res.begin(), res.end(), [] (auto e) { std::cout << e << std::endl; } );
 
     return 0;
 }
