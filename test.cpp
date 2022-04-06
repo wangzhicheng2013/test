@@ -13,8 +13,9 @@ int main() {
     boost::array<unsigned char, 60> res = chars_65_125();
     std::for_each(res.begin(), res.end(), [] (auto e) { std::cout << e << std::endl; } );
     std::string data = "Hello World";
-    boost::algorithm::hex(begin(data), end(data), std::ostream_iterator<char>(std::cout));
+    //boost::algorithm::hex(begin(data), end(data), std::ostream_iterator<char>(std::cout));
+    boost::algorithm::hex(data, std::ostream_iterator<char>(std::cout));
     std::cout << std::endl;
-    
+
     return 0;
 }
