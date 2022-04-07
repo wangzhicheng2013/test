@@ -25,9 +25,26 @@ bool foo1() {
     std::cout << "foo1 over!" << std::endl;
     return true;
 }
+bool foo2() {
+    foo_class *p = new foo_class("something happened!");
+    auto is_happened = some_function1(*p);
+    if (is_happened) {
+        delete p;
+        return false;
+    }
+    try {
+        some_function2(p);
+    }
+    catch (...) {
+        delete p;
+    }
+    std::cout << "foo1 over!" << std::endl;
+    return true;
+}
 int main() {
     g_exit_on_first_function = false;
-    foo1();
+    //foo1();
+    foo2();
 
     return 0;
 }
