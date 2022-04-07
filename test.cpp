@@ -1,21 +1,33 @@
 #include <iostream>
-#include <algorithm>
-#include <iterator>
-#include "boost/array.hpp"
-#include "boost/algorithm/cxx11/iota.hpp"
-#include "boost/algorithm/hex.hpp"
-boost::array<unsigned char, 60> chars_65_125() {
-    boost::array<unsigned char, 60>res;
-    boost::algorithm::iota(res.begin(), res.end(), 65);
-    return res;
+bool g_exit_on_first_function = true;
+class foo_class {
+public:
+    char data[1000000];
+    explicit foo_class(const char *param) {
+        std::cout << "foo class!" << std::endl;
+    }
+};
+bool some_function1(const foo_class &) {
+    return g_exit_on_first_function;
+}
+void some_function2(const foo_class *) {
+    throw std::exception();
+}
+bool foo1() {
+    foo_class *p = new foo_class("something happened!");
+    auto is_happened = some_function1(*p);
+    if (is_happened) {
+        delete p;
+        return false;
+    }
+    some_function2(p);
+    delete p;
+    std::cout << "foo1 over!" << std::endl;
+    return true;
 }
 int main() {
-    boost::array<unsigned char, 60> res = chars_65_125();
-    std::for_each(res.begin(), res.end(), [] (auto e) { std::cout << e << std::endl; } );
-    std::string data = "Hello World";
-    //boost::algorithm::hex(begin(data), end(data), std::ostream_iterator<char>(std::cout));
-    boost::algorithm::hex(data, std::ostream_iterator<char>(std::cout));
-    std::cout << std::endl;
+    g_exit_on_first_function = false;
+    foo1();
 
     return 0;
 }
