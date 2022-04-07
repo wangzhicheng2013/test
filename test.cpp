@@ -1,4 +1,5 @@
 #include <iostream>
+#include "boost/scoped_ptr.hpp"
 bool g_exit_on_first_function = true;
 class foo_class {
 public:
@@ -41,10 +42,23 @@ bool foo2() {
     std::cout << "foo1 over!" << std::endl;
     return true;
 }
+bool foo3() {
+    boost::scoped_ptr<foo_class>p(new foo_class("something happened!"));
+    auto is_happened = some_function1(*p);
+    if (is_happened) {
+        delete p;
+        return false;
+    }
+    some_function2(p);
+    delete p;
+    std::cout << "foo1 over!" << std::endl;
+    return true;
+}
 int main() {
     g_exit_on_first_function = false;
     //foo1();
-    foo2();
+    //foo2();
+    foo3();
 
     return 0;
 }
