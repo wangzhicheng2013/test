@@ -1,5 +1,6 @@
 #include <iostream>
 #include "boost/scoped_ptr.hpp"
+#include <boost/move/make_unique.hpp>
 bool g_exit_on_first_function = true;
 class foo_class {
 public:
@@ -52,11 +53,22 @@ bool foo3() {
     std::cout << "foo3 over!" << std::endl;
     return true;
 }
+bool foo4() {
+    const boost::movelib::unique_ptr<foo_class>p = boost::movelib::make_unique<foo_class>("something happened!");
+    auto is_happened = some_function1(*p);
+    if (is_happened) {
+        return false;
+    }
+    some_function2(p.get());
+    std::cout << "foo4 over!" << std::endl;
+    return true;
+}
 int main() {
     g_exit_on_first_function = false;
     //foo1();
     //foo2();
-    foo3();
+    //foo3();
+    foo4();
 
     return 0;
 }
