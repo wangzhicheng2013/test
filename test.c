@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 typedef struct _DATA
 {
     int protoType_data;
@@ -39,6 +40,6 @@ int main()
         free(C);
     }
     free(A);
-    
+
     return 0;
 }
