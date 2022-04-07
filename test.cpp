@@ -39,19 +39,17 @@ bool foo2() {
     catch (...) {
         delete p;
     }
-    std::cout << "foo1 over!" << std::endl;
+    std::cout << "foo2 over!" << std::endl;
     return true;
 }
 bool foo3() {
     boost::scoped_ptr<foo_class>p(new foo_class("something happened!"));
     auto is_happened = some_function1(*p);
     if (is_happened) {
-        delete p;
         return false;
     }
-    some_function2(p);
-    delete p;
-    std::cout << "foo1 over!" << std::endl;
+    some_function2(p.get());
+    std::cout << "foo3 over!" << std::endl;
     return true;
 }
 int main() {
