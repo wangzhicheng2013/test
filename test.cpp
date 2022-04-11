@@ -85,6 +85,8 @@ void foo3_const() {
 }
 int main() {
     foo2();
+    foo3();
+    foo3_const();
 
     return 0;
 }
