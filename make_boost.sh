@@ -1,1 +1,1 @@
-g++ -std=c++17 -g -o Test test.cpp -I ./ -I /opt/boost/boost_1_78_0 -L /opt/boost/boost_1_78_0/stage -pthread
+g++ -std=c++17 -g -o Test test.cpp -I ./ -I /opt/boost/boost_1_78_0 -L /opt/boost/boost_1_78_0/stage  -lboost_thread -pthread
