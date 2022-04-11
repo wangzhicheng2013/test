@@ -1,6 +1,10 @@
 #include <iostream>
-#include "boost/scoped_ptr.hpp"
-#include <boost/move/make_unique.hpp>
+#include <string>
+#include <cassert>
+#include "boost/thread.hpp"
+#include "boost/bind.hpp"
+#include "boost/shared_ptr.hpp"
+#include "boost/smart_ptr/make_shared.hpp"
 bool g_exit_on_first_function = true;
 class foo_class {
 public:
@@ -9,66 +13,78 @@ public:
         std::cout << "foo class!" << std::endl;
     }
 };
-bool some_function1(const foo_class &) {
-    return g_exit_on_first_function;
+foo_class *get_data() {
+    static int i = 0;
+    ++i;
+    if (i % 2) {
+        return new foo_class("Just something!");
+    }
+    else {
+        return 0;
+    }
 }
-void some_function2(const foo_class *) {
-    throw std::exception();
+void process1(const foo_class *p) {
+    assert(p);
 }
-bool foo1() {
-    foo_class *p = new foo_class("something happened!");
-    auto is_happened = some_function1(*p);
-    if (is_happened) {
-        delete p;
-        return false;
-    }
-    some_function2(p);
-    delete p;
-    std::cout << "foo1 over!" << std::endl;
-    return true;
+void process2(const foo_class *p) {
+    assert(p);
 }
-bool foo2() {
-    foo_class *p = new foo_class("something happened!");
-    auto is_happened = some_function1(*p);
-    if (is_happened) {
-        delete p;
-        return false;
-    }
-    try {
-        some_function2(p);
-    }
-    catch (...) {
-        delete p;
-    }
-    std::cout << "foo2 over!" << std::endl;
-    return true;
+void process3(const foo_class *p) {
+    assert(p);
 }
-bool foo3() {
-    boost::scoped_ptr<foo_class>p(new foo_class("something happened!"));
-    auto is_happened = some_function1(*p);
-    if (is_happened) {
-        return false;
-    }
-    some_function2(p.get());
-    std::cout << "foo3 over!" << std::endl;
-    return true;
+void process_sp1(const boost::shared_ptr<foo_class>&p) {
+    assert(!!p);
 }
-bool foo4() {
-    const boost::movelib::unique_ptr<foo_class>p = boost::movelib::make_unique<foo_class>("something happened!");
-    auto is_happened = some_function1(*p);
-    if (is_happened) {
-        return false;
+void process_sp2(const boost::shared_ptr<foo_class>&p) {
+    assert(!!p);
+}
+void process_sp3(const boost::shared_ptr<foo_class>&p) {
+    assert(!!p);
+}
+void process_str1(boost::shared_ptr<std::string> p) {
+    assert(p);
+}
+
+void process_str2(const boost::shared_ptr<std::string>& p) {
+    assert(p);
+}
+
+void process_cstr1(boost::shared_ptr<const std::string> p) {
+    assert(p);
+}
+
+void process_cstr2(const boost::shared_ptr<const std::string>& p) {
+    assert(p);
+}
+
+void foo1() {
+    while (foo_class *p = get_data()) {
+        boost::thread(boost::bind(&process1, p)).detach();
+        boost::thread(boost::bind(&process2, p)).detach();
+        boost::thread(boost::bind(&process3, p)).detach();
     }
-    some_function2(p.get());
-    std::cout << "foo4 over!" << std::endl;
-    return true;
+}
+void foo2() {
+    typedef boost::shared_ptr<foo_class>ptr_t;
+    ptr_t p;
+    while (p = ptr_t(get_data())) {
+        boost::thread(boost::bind(&process_sp1, p)).detach();
+        boost::thread(boost::bind(&process_sp2, p)).detach();
+        boost::thread(boost::bind(&process_sp3, p)).detach();
+    }
+}
+void foo3() {
+    boost::shared_ptr<std::string>ps = boost::make_shared<std::string>("C++");
+    boost::thread(boost::bind(&process_str1, ps)).detach();
+    boost::thread(boost::bind(&process_str2, ps)).detach();
+}
+void foo3_const() {
+    boost::shared_ptr<const std::string>ps = boost::make_shared<const std::string>("Modern C++");
+    boost::thread(boost::bind(&process_cstr1, ps)).detach();
+    boost::thread(boost::bind(&process_cstr2, ps)).detach();
 }
 int main() {
-    g_exit_on_first_function = false;
-    //foo1();
-    //foo2();
-    //foo3();
-    foo4();
+    foo2();
 
     return 0;
 }
