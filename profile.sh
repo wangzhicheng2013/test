@@ -1,1 +1,1 @@
-export LD_LIBRARY_PATH=$PATH:./
+export LD_LIBRARY_PATH=$PATH:./:/opt/boost/boost_1_78_0/stage/lib
