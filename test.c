@@ -1,45 +1,60 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-typedef struct _DATA
+#define RTOS_TYPE
+static void create_freertos_1(void)
 {
-    int protoType_data;
-    struct _DATA *(*copy)(struct _DATA *);
-} DATA;
-DATA *data_copy(DATA *pData)
-{
-    DATA *pResult = (DATA *)malloc(sizeof(DATA));
-    if (NULL == pResult) 
-    {
-        return NULL;
-    }
-    memmove(pResult, pData, sizeof(DATA));
-    return pResult;
+    printf("create_freertos_1\n");
 }
-DATA *clone(DATA *pData) 
+static void create_freertos_2(void)
 {
-    return pData->copy(pData);
+    printf("create_freertos_2\n");
+}
+static void create_ucos(void)
+{
+    printf("create_ucos\n");
+}
+static void run_freertos_1(void)
+{
+    printf("run_freertos_1\n");
+}
+static void run_freertos_2(void)
+{
+    printf("run_freertos_2\n");
+}
+static void run_ucos(void)
+{
+    printf("run_ucos\n");
+}
+typedef struct _OsAdapter
+{
+    void (*create)(void);
+    void (*run)(void);
+} OsAdapter;
+void create(void)
+{
+#ifdef RTOS_TYPE
+    create_freertos_1();
+    create_freertos_2();
+#elif UCOS_TYPE
+    create_ucos();
+#endif
+}
+void run(void)
+{
+#ifdef RTOS_TYPE
+    run_freertos_1();
+    run_freertos_2();
+#elif UCOS_TYPE
+    run_ucos();
+#endif
 }
 int main() 
 {
-    DATA *A, *B, *C;
-    A = (DATA *)malloc(sizeof(DATA));
-    if (NULL == A)
-    {
-        return -1;
-    }
-    A->copy = data_copy;
-    B = clone(A);
-    C = clone(A);
-    if (B) 
-    {
-        free(B);
-    }
-    if (C) 
-    {
-        free(C);
-    }
-    free(A);
+    OsAdapter os;
+    os.create = create;
+    os.create();
+    os.run = run;
+    os.run();
 
     return 0;
 }
