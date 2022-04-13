@@ -11,7 +11,7 @@ void may_throw2(const char *) {
 void foo() {
     char *buffer = new char[1024 * 1024 * 10];
     may_throw1(buffer[0]);
-    may_throw2(buffer.get());
+    may_throw2(buffer);
     delete buffer;
 }
 void foo_fixed() {
