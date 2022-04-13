@@ -9,7 +9,7 @@ int sub(int num1, int num2) {
 int mul(int num1, int num2) {
     return num1 * num2;
 }
-int decorator(int (*func)(int, int), int num1, num2) {
+int decorator(int (*func)(int, int), int num1, int num2) {
     return func(num1, num2);
 }
 int main() 
