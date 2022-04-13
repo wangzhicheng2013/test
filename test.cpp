@@ -1,13 +1,12 @@
 #include <iostream>
 #include <string>
 #include <cassert>
-#include "boost/bind.hpp"
-#include "boost/shared_ptr.hpp"
-#include "boost/smart_ptr/make_shared.hpp"
+#include <stdexcept>
+#include "boost/scoped_array.hpp"
 void may_throw1(char) {
 }
 void may_throw2(const char *) {
-    std::throw std::exception();
+    throw std::exception();
 }
 void foo() {
     char *buffer = new char[1024 * 1024 * 10];
@@ -29,6 +28,6 @@ int main() {
     catch (...) {
 
     }
-    
+
     return 0;
 }
