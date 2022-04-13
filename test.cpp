@@ -3,6 +3,7 @@
 #include <cassert>
 #include <stdexcept>
 #include "boost/scoped_array.hpp"
+#include "boost/move/make_unique.hpp"
 void may_throw1(char) {
 }
 void may_throw2(const char *) {
@@ -19,10 +20,15 @@ void foo_fixed() {
     may_throw1(buffer[0]);
     may_throw2(buffer.get());
 }
-
+void foo_fixed2() {
+    const boost::movelib::unique_ptr<char []>buffer = boost::movelib::make_unique<char []>(1024 * 1024 * 10);
+    may_throw1(buffer[0]);
+    may_throw2(buffer.get());
+}
 int main() {
     try {
-        foo_fixed();
+        //foo_fixed();
+        foo_fixed2();
         assert(false);
     }
     catch (...) {
