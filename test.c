@@ -1,23 +1,50 @@
 #include <stdio.h>
 #include <stdlib.h>
-int add(int num1, int num2) {
-    return num1 + num2;
+typedef struct _surf_internet 
+{
+    void (*request)();
+} surf_internet;
+void ftp_request()
+{
+    printf("request from ftp\n");
 }
-int sub(int num1, int num2) {
-    return num1 - num2;
+void smtp_request()
+{
+    printf("request from smtp\n");
 }
-int mul(int num1, int num2) {
-    return num1 * num2;
+void web_request()
+{
+    printf("request from web\n");
 }
-int decorator(int (*func)(int, int), int num1, int num2) {
-    return func(num1, num2);
+typedef struct _Proxy
+{
+    surf_internet *client;
+} Proxy;
+void process(Proxy *proxy) 
+{
+    if ((NULL == proxy) || (NULL == proxy->client))
+    {
+        return;
+    }
+    proxy->client->request();
 }
 int main() 
 {
-    int a = 1, b = 2;
-    printf("%d\n", decorator(add, a, b));
-    printf("%d\n", decorator(sub, a, b));
-    printf("%d\n", decorator(mul, a, b));
+    Proxy *proxy = (Proxy *)malloc(sizeof(Proxy));
+    if (NULL == proxy)
+    {
+        return -1;
+    }
+    proxy->client = (surf_internet *)malloc(sizeof(surf_internet));
+    if (NULL == proxy->client)
+    {
+        free(proxy);
+        return -1;    
+    }
+    proxy->client->request = web_request;
+    process(proxy);
+    free(proxy->client);
+    free(proxy);
 
     return 0;
 }
