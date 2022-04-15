@@ -27,7 +27,7 @@ void do_process_shared(const boost::shared_ptr<char[Size]>&data) {
 template <std::size_t Size>
 void do_process_in_background_v1(const char *data) {
     boost::shared_ptr<char[Size]>data_cpy = boost::make_shared<char[Size]>();
-    std::memcpy(data_cpy, data.get(), size);
+    std::memcpy(data_cpy.get(), data, size);
     boost::thread(boost::bind(&do_process_shared<Size>, data_cpy)).detach();
     boost::thread(boost::bind(&do_process_shared<Size>, data_cpy)).detach();
 }
@@ -36,7 +36,7 @@ void do_process_shared_ptr(const boost::shared_ptr<char[]>& data, std::size_t si
 }
 void do_process_in_background_v2(const char *data, std::size_t size) {
     boost::shared_ptr<char[]>data_cpy = boost::make_shared<char[]>(size);
-    std::memcpy(data_cpy, data.get(), size);
+    std::memcpy(data_cpy.get(), data, size);
     boost::thread(boost::bind(&do_process_shared_ptr<Size>, data_cpy)).detach();
     boost::thread(boost::bind(&do_process_shared_ptr<Size>, data_cpy)).detach();
 }
@@ -45,7 +45,7 @@ void do_process_shared_ptr2(const boost::shared_ptr<char>&data, std::size_t size
 }
 void do_process_in_background_v3(const char *data, std::size_t size) {
     boost::shared_ptr<char>data_cpy(new char[size], boost::checked_array_deleter<char>());
-    std::memcpy(data_cpy, data.get(), size);
+    std::memcpy(data_cpy.get(), data, size);
     boost::thread(boost::bind(&do_process_shared_ptr2, data_cpy, size)).detach();
     boost::thread(boost::bind(&do_process_shared_ptr2, data_cpy, size)).detach();
 }
@@ -54,7 +54,7 @@ void do_process_shared_array(const boost::shared_array<char>&data, std::size_t s
 }
 void do_process_in_background_v4(const char *data, std::size_t size) {
     boost::shared_array<char>data_cpy(new char[size]);
-    std::memcpy(data_cpy, data.get(), size);
+    std::memcpy(data_cpy.get(), data, size);
     boost::thread(boost::bind(&do_process_shared_array, data_cpy)).detach();
     boost::thread(boost::bind(&do_process_shared_array, data_cpy)).detach();
 }
