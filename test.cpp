@@ -8,6 +8,7 @@
 #include "boost/shared_ptr.hpp"
 #include "boost/make_shared.hpp"
 #include "boost/shared_array.hpp"
+#include "boost/chrono/duration.hpp"
 void do_process(const char *data, std::size_t size) {
     assert(size);
     assert(data);
