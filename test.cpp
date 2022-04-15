@@ -27,7 +27,7 @@ void do_process_shared(const boost::shared_ptr<char[Size]>&data) {
 template <std::size_t Size>
 void do_process_in_background_v1(const char *data) {
     boost::shared_ptr<char[Size]>data_cpy = boost::make_shared<char[Size]>();
-    std::memcpy(data_cpy.get(), data, size);
+    std::memcpy(data_cpy.get(), data, Size);
     boost::thread(boost::bind(&do_process_shared<Size>, data_cpy)).detach();
     boost::thread(boost::bind(&do_process_shared<Size>, data_cpy)).detach();
 }
