@@ -60,7 +60,7 @@ void do_process_in_background_v4(const char *data, std::size_t size) {
 }
 int main() {
     char ch[] = "Hello dear reader!";
-    do_process_in_background_v1<sizeoif(ch)>(ch);
+    do_process_in_background_v1<sizeof(ch)>(ch);
     do_process_in_background_v2(ch, sizeof(ch));
     do_process_in_background_v3(ch, sizeof(ch));
     do_process_in_background_v4(ch, sizeof(ch));
