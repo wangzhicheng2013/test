@@ -37,8 +37,8 @@ void do_process_shared_ptr(const boost::shared_ptr<char[]>& data, std::size_t si
 void do_process_in_background_v2(const char *data, std::size_t size) {
     boost::shared_ptr<char[]>data_cpy = boost::make_shared<char[]>(size);
     std::memcpy(data_cpy.get(), data, size);
-    boost::thread(boost::bind(&do_process_shared_ptr<Size>, data_cpy)).detach();
-    boost::thread(boost::bind(&do_process_shared_ptr<Size>, data_cpy)).detach();
+    boost::thread(boost::bind(&do_process_shared_ptr, data_cpy, size)).detach();
+    boost::thread(boost::bind(&do_process_shared_ptr, data_cpy, size)).detach();
 }
 void do_process_shared_ptr2(const boost::shared_ptr<char>&data, std::size_t size) {
     do_process(data.get(), size);
@@ -55,8 +55,8 @@ void do_process_shared_array(const boost::shared_array<char>&data, std::size_t s
 void do_process_in_background_v4(const char *data, std::size_t size) {
     boost::shared_array<char>data_cpy(new char[size]);
     std::memcpy(data_cpy.get(), data, size);
-    boost::thread(boost::bind(&do_process_shared_array, data_cpy)).detach();
-    boost::thread(boost::bind(&do_process_shared_array, data_cpy)).detach();
+    boost::thread(boost::bind(&do_process_shared_array, data_cpy, size)).detach();
+    boost::thread(boost::bind(&do_process_shared_array, data_cpy, size)).detach();
 }
 int main() {
     char ch[] = "Hello dear reader!";
