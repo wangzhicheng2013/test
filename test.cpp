@@ -15,12 +15,12 @@ public:
         , triggered_(triggered)
     {}
     void operator() (int i) const {
-        triggered_ = (i > max_ ) || (i < main_);
+        triggered_ = (i > max_ ) || (i < min_);
     }
 };
 void process_integers(const fobject_t &f) {
     static const int data[] = { 1, 2, 3, 4, 200 };
-    std::for_each(begin(data), end(data), f);
+    std::for_each(std::begin(data), std::end(data), f);
 }
 int main() {
     bool is_triggered = false;
