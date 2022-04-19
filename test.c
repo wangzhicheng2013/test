@@ -27,7 +27,7 @@ void person_playing(PlayRequest *pPlayRequest)
         ((BodyBuilder *)pPlayRequest->pPlaying)->play();
         break;
     case BAIL_PLAYING_TYPE:
-        ((PlayRequest *)pPlayRequest->pPlaying)->play();
+        ((BailPlaying *)pPlayRequest->pPlaying)->play();
         break;
     }
 }
