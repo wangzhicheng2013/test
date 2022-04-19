@@ -1,69 +1,48 @@
 #include <stdio.h>
 #include <stdlib.h>
-typedef struct _FoodClass
-{
-    void (*eat)();
-} FoodClass;
-void eat()
-{
-    printf("I want to eat!\n");
-}
-typedef struct _ShopClass
-{
-    void (*shop)();
-} ShopClass;
-void shop()
-{
-    printf("I want to shop!\n");
-}
-typedef struct _PlayClass
+typedef struct _BodyBuilder
 {
     void (*play)();
-} PlayClass;
-void play()
+} BodyBuilder;
+typedef struct _BailPlaying
 {
-    printf("I want to play!\n");
-}
-typedef struct _TourClass
+    void (*play)();
+} BailPlaying;
+typedef struct _PlayRequest
 {
-    FoodClass *pFood;
-    ShopClass *pShop;
-    PlayClass *pPlay;
-    void (*facade)(struct _TourClass *pTour);
-} TourClass;
-void facade(TourClass *pTour)
+    int type;
+    void *pPlaying;
+} PlayRequest;
+#define BODY_BUILDER_TYPE 0
+#define BAIL_PLAYING_TYPE 1
+void person_playing(PlayRequest *pPlayRequest)
 {
-    if (NULL == pTour)
+    if ((NULL == pPlayRequest) || (NULL == pPlayRequest->pPlaying))
     {
         return;
     }
-    if (pTour->pFood)
+    switch (pPlayRequest->type)
     {
-        pTour->pFood->eat();
+    case BODY_BUILDER_TYPE:
+        ((BodyBuilder *)pPlayRequest->pPlaying)->play();
+        break;
+    case BAIL_PLAYING_TYPE:
+        ((PlayRequest *)pPlayRequest->pPlaying)->play();
+        break;
     }
-    if (pTour->pShop)
-    {
-        pTour->pShop->shop();
-    }
-    if (pTour->pPlay)
-    {
-        pTour->pPlay->play();
-    }
+}
+void body_building() 
+{
+    printf("body building!\n");
 }
 int main() 
 {
-    FoodClass Food;
-    ShopClass Shop;
-    PlayClass Play;
-    Food.eat = eat;
-    Shop.shop = shop;
-    Play.play = play;
-    TourClass Tour;
-    Tour.pFood = &Food;
-    Tour.pShop = &Shop;
-    Tour.pPlay = &Play;
-    Tour.facade = facade;
-    Tour.facade(&Tour);
-    
+    BodyBuilder bodyBuilder;
+    bodyBuilder.play = body_building;
+    PlayRequest request;
+    request.type = BODY_BUILDER_TYPE;
+    request.pPlaying = &bodyBuilder;
+    person_playing(&request);
+
     return 0;
 }
