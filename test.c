@@ -20,7 +20,7 @@ typedef struct _TemplateFactory
     Template **pTemplates;
     int num;
     int size;
-    Template (*GetTemplate)(struct _TemplateFactory *pTemplateFactory, int title, int font, int lineDistance);
+    Template* (*GetTemplate)(struct _TemplateFactory *pTemplateFactory, int title, int font, int lineDistance);
     void (*FreeTemplates)(struct _TemplateFactory *pTemplateFactory);
 } TemplateFactory;
 Template *GetTemplate(struct _TemplateFactory *pTemplateFactory, int title, int font, int lineDistance)
