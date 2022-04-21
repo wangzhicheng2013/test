@@ -62,16 +62,33 @@ Template *GetTemplate(struct _TemplateFactory *pTemplateFactory, int title, int 
         ++(pTemplateFactory->num);
         return pTemplate;
     }
-    pTemplates = (Template **)malloc(sizeof(Template *) * (2 * pTemplateFactory->size));
+    if (0 == pTemplateFactory->size)
+    {
+        pTemplates = (Template **)malloc(sizeof(Template *));    
+    }
+    else 
+    {
+        pTemplates = (Template **)malloc(sizeof(Template *) * (2 * pTemplateFactory->size));
+    }
     if (NULL == pTemplates)
     {
         return NULL;
     }
-    memmove(pTemplates, pTemplateFactory->pTemplates, pTemplateFactory->size);
-    free(pTemplateFactory->pTemplates);
+    if (pTemplateFactory->size > 0)
+    {
+        memmove(pTemplates, pTemplateFactory->pTemplates, pTemplateFactory->size);
+        free(pTemplateFactory->pTemplates);
+    }
     pTemplateFactory->pTemplates = pTemplates;
     pTemplateFactory->pTemplates[pTemplateFactory->size] = pTemplate;
-    pTemplateFactory->size *= 2;
+    if (pTemplateFactory->size > 0)
+    {
+        pTemplateFactory->size *= 2;
+    }
+    else
+    {
+        pTemplateFactory->size = 1;
+    }
     ++(pTemplateFactory->num);
     return pTemplate;
 }
@@ -95,6 +112,8 @@ void FreeTemplates(struct _TemplateFactory *pTemplateFactory)
 int main() 
 {
     TemplateFactory templateFactory = { 0 };
+    templateFactory.size = 10;
+    
     templateFactory.GetTemplate = GetTemplate;
     templateFactory.FreeTemplates = FreeTemplates;
     Template *pTemplate = templateFactory.GetTemplate(&templateFactory, 1, 2, 3);
@@ -102,7 +121,6 @@ int main()
     {
         pTemplate->operate = operate;
         pTemplate->operate(pTemplate);
-        free(pTemplate);
     }
     templateFactory.FreeTemplates(&templateFactory);
 
