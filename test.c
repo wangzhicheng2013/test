@@ -15,7 +15,7 @@ void operate(struct _Template *pTemplate)
         printf("title:%d, font:%d, lineDistance:%d\n", pTemplate->title, pTemplate->font, pTemplate->lineDistance);
     }
 }
-/*typedef struct _TemplateFactory
+typedef struct _TemplateFactory
 {
     Template **pTemplates;
     int num;
@@ -75,7 +75,7 @@ Template *GetTemplate(struct _TemplateFactory *pTemplateFactory, int title, int 
     ++(pTemplateFactory->num);
     return pTemplate;
 }
-void free(struct _TemplateFactory *pTemplateFactory)
+/*void free(struct _TemplateFactory *pTemplateFactory)
 {
     int index = 0;
     Template *pTemplate = NULL;
