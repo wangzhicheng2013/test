@@ -6,14 +6,15 @@ typedef struct _Template
     int title;
     int font;
     int lineDistance;
-    void (*operate)(struct _Template *pTemplate)
-    {
-        if (pTemplate)
-        {
-            printf("title:%d, font:%d, lineDistance:%d\n", pTemplate->title, pTemplate->font, pTemplate->lineDistance);
-        }
-    }
+    void (*operate)(struct _Template *pTemplate);
 } Template;
+void operate(struct _Template *pTemplate)
+{
+    if (pTemplate)
+    {
+        printf("title:%d, font:%d, lineDistance:%d\n", pTemplate->title, pTemplate->font, pTemplate->lineDistance);
+    }
+}
 /*typedef struct _TemplateFactory
 {
     Template **pTemplates;
