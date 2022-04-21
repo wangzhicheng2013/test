@@ -20,7 +20,7 @@ typedef struct _TemplateFactory
     Template **pTemplates;
     int num;
     int size;
-    Template *GetTemplate(struct _TemplateFactory *pTemplateFactory, int title, int font, int lineDistance);
+    Template (*GetTemplate)(struct _TemplateFactory *pTemplateFactory, int title, int font, int lineDistance);
     void (*free)(struct _TemplateFactory *pTemplateFactory);
 } TemplateFactory;
 Template *GetTemplate(struct _TemplateFactory *pTemplateFactory, int title, int font, int lineDistance)
@@ -75,7 +75,7 @@ Template *GetTemplate(struct _TemplateFactory *pTemplateFactory, int title, int 
     ++(pTemplateFactory->num);
     return pTemplate;
 }
-/*void free(struct _TemplateFactory *pTemplateFactory)
+void free(struct _TemplateFactory *pTemplateFactory)
 {
     int index = 0;
     Template *pTemplate = NULL;
@@ -91,7 +91,7 @@ Template *GetTemplate(struct _TemplateFactory *pTemplateFactory, int title, int 
     {
         free(pTemplateFactory->pTemplates);
     }
-}*/
+}
 int main() 
 {
    /* TemplateFactory templateFactory = { 0 };
