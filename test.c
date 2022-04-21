@@ -102,6 +102,7 @@ int main()
     {
         pTemplate->operate = operate;
         pTemplate->operate(pTemplate);
+        free(pTemplate);
     }
     templateFactory.FreeTemplates(&templateFactory);
 
