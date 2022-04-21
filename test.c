@@ -14,7 +14,7 @@ typedef struct _Template
         }
     }
 } Template;
-typedef struct _TemplateFactory
+/*typedef struct _TemplateFactory
 {
     Template **pTemplates;
     int num;
@@ -90,10 +90,10 @@ void free(struct _TemplateFactory *pTemplateFactory)
     {
         free(pTemplateFactory->pTemplates);
     }
-}
+}*/
 int main() 
 {
-    TemplateFactory templateFactory = { 0 };
+   /* TemplateFactory templateFactory = { 0 };
     templateFactory.GetTemplate = GetTemplate;
     templateFactory.free = free;
     Template *pTemplate = templateFactory.GetTemplate(&templateFactory, 1, 2, 3);
@@ -102,6 +102,6 @@ int main()
         pTemplate->operate(pTemplate);
     }
     templateFactory.free();
-
+*/
     return 0;
 }
