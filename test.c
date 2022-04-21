@@ -95,6 +95,7 @@ void FreeTemplates(struct _TemplateFactory *pTemplateFactory)
 int main() 
 {
     TemplateFactory templateFactory = { 0 };
+    templateFactory.size = 10;
     templateFactory.GetTemplate = GetTemplate;
     templateFactory.FreeTemplates = FreeTemplates;
     Template *pTemplate = templateFactory.GetTemplate(&templateFactory, 1, 2, 3);
@@ -102,7 +103,7 @@ int main()
     {
         pTemplate->operate = operate;
         pTemplate->operate(pTemplate);
-        free(pTemplate);
+       // free(pTemplate);
     }
     templateFactory.FreeTemplates(&templateFactory);
 
