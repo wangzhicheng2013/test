@@ -97,13 +97,13 @@ int main()
     TemplateFactory templateFactory = { 0 };
     templateFactory.GetTemplate = GetTemplate;
     templateFactory.FreeTemplates = FreeTemplates;
-    /*Template *pTemplate = templateFactory.GetTemplate(&templateFactory, 1, 2, 3);
+    Template *pTemplate = templateFactory.GetTemplate(&templateFactory, 1, 2, 3);
     if (pTemplate != NULL)
     {
         pTemplate->operate = operate;
         pTemplate->operate(pTemplate);
     }
     templateFactory.FreeTemplates();
-*/
+
     return 0;
 }
