@@ -103,7 +103,7 @@ int main()
         pTemplate->operate = operate;
         pTemplate->operate(pTemplate);
     }
-    templateFactory.FreeTemplates();
+    templateFactory.FreeTemplates(&templateFactory);
 
     return 0;
 }
