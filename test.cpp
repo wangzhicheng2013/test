@@ -1,35 +1,36 @@
 #include <iostream>
-#include <string>
-#include <cassert>
-#include <deque>
-#include <algorithm>
-#include "boost/function.hpp"
-typedef boost::function<void(int)>fobject_t;
-void process_integers(const fobject_t &fun) {
-    static const int data[] = { 1, 2, 3, 4, 5, 200 };
-    std::for_each(std::begin(data), std::end(data), fun);
+#include "boost/static_assert.hpp"
+#include "boost/type_traits/is_same.hpp"
+#include "boost/core/enable_if.hpp"
+#include "boost/type_traits/is_same.hpp"
+#include "boost/type_traits/has_plus_assign.hpp"
+template <class T>
+T process_data_plus_assign(const T&v1, const T&v2, const T&v3) {
+    BOOST_STATIC_ASSERT(boost::is_same<int, T>::value);
+    (void)v2;
+    (void)v3;
+    std::cout << "call T process_data_plus_assign(const T&v1, const T&v2, const T&v3) " << std::endl;
+    return v1;
 }
-void sample() {
-    process_integers([](int) { });
-    std::deque<int>ints;
-    process_integers([&ints](int i) {
-        ints.push_back(i);
-    });
-    std::size_t match_count = 0;
-    process_integers([&ints, &match_count](int i) mutable {
-        if (ints.front() == i) {
-            ++match_count;
-        }
-        ints.pop_front();
-    });
-    assert(6 == match_count);
+template <class T>
+typename boost::disable_if_c<boost::has_plus_assign<T>::value, T>::type
+    process_data(const T&v1, const T&v2, const T&v3) {
+        BOOST_STATIC_ASSERT(boost::is_same<const char *, T>::value);
+        (void)v2;
+        (void)v3;
+        std::cout << "call typename boost::diable_if_c<boost::has_plus_assign<T>::value, T>::type" << std::endl;
+        return v1;
+}
+template <class T>
+typename boost::enable_if_c<boost::has_plus_assign<T>::value, T>::type
+    process_data(const T&v1, const T&v2, const T&v3) {
+        return process_data_plus_assign(v1, v2, v3);
 }
 int main() {
-    sample();
-    std::deque<int>v = { 10, 20, 30, 40, 50 };
-    std::for_each(std::begin(v), std::end(v), [](int &v) { v += 10;});
-    const boost::function<void(int&)>f0([] (int &v) { v += 10;});
-    std::for_each(std::begin(v), std::end(v), f0);
+    int i = 1;
+    process_data(i, i, i);
+    process_data<const char *>("Testing", "example", "function");
 
     return 0;
 }
+
